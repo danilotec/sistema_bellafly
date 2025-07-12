@@ -1,0 +1,39 @@
+# Ambiente virtual (ex: venv, env)
+venv/
+env/
+
+# Arquivos Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações de IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de banco de dados (opcional — útil em desenvolvimento local)
+*.sqlite3
+
+# Arquivos de mídia (gerados por upload de usuários)
+media/
+
+# Arquivos estáticos coletados (usados em produção)
+staticfiles/
+static_root/
+
+# Arquivos de log
+*.log
+
+# Configurações locais e sensíveis
+.env
+.env.*
+
+# Arquivos de migração vazios ou temporários (opcional)
+*/migrations/__pycache__/
+*/migrations/*.pyc
