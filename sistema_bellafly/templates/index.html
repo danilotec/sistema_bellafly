@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'icons/favicon.png' %}" type="image/x-icon">
   <title>Bellafly</title>
 </head>
 
@@ -13,19 +14,23 @@
   <header>
     🦋 Bellafly 🦋 
   </header>
-
+  
   <section class="products">
     {% for produto in produtos %}
-    <div class="card">
-      <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} image">
-      <h2>{{ produto.nome }}</h2>
-      <p>{{ produto.descricao }}</p>
-      <div class="price">R$ {{ produto.preco }}</div>
-      <div class="price">Disponivel: {{ produto.quantidade_estoque }}</div>
-      <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+Batom+vermelho+Duo+Perfect+Match+Niina!" target="_blank">Comprar pelo WhatsApp</a>
-    </div>
+      {% if produto.ativo == True %}
+        <div class="card">
+          <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} image">
+          <h2>{{ produto.nome }}</h2>
+          <p>{{ produto.descricao }}</p>
+          <div class="price">R$ {{ produto.preco }}</div>
+          <div class="price">Disponivel: {{ produto.quantidade_estoque }}</div>
+          <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome }}" target="_blank">Comprar pelo WhatsApp</a>
+        </div>
+      {% endif %}
     {% endfor %}
   </section>
+  <footer>
+    <a class="btn" href="{% url 'admin:index' %}" target="_blank">Login</a>
+  </footer>
 </body>
-
 </html>
