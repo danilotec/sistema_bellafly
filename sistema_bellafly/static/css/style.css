@@ -22,7 +22,8 @@
     max-height: 200px;
     height: auto;
   }
-
+  
+  
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -71,6 +72,11 @@
     transition: background-color 0.3s;
   }
 
+  footer {
+    display: flex;
+    justify-content: flex-end; /* empurra para a direita */
+    padding: 10px;
+  }
   .btn:hover {
     background-color: #d81b60;
   }
