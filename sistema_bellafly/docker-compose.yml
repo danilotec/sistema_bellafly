@@ -1,0 +1,28 @@
+services:
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: bellaflydb
+      POSTGRES_USER: bellaflyuser
+      POSTGRES_PASSWORD: bellaflypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  bellafly-app:
+    build: .
+    volumes:
+      - .:/sistema_bellafly
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: bellaflydb
+      DB_USER: bellaflyuser
+      DB_PASSWORD: bellaflypassword
+      DB_HOST: db
+      DB_PORT: 5432
+
+volumes:
+  postgres_data:
