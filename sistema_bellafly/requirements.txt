@@ -10,3 +10,4 @@ sqlparse==0.5.3
 types-requests==2.32.4.20250611
 urllib3==2.5.0
 psycopg2-binary==2.9.9
+gunicorn==21.2.0
