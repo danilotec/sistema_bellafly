@@ -11,11 +11,39 @@
 # EXPOSE 8000
 
 # CMD ["sh", "-c", "python wait_for_db.py && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# FROM python:3.11-slim
+
+# # Instalar dependências do sistema necessárias para PostgreSQL
+# RUN apt-get update && apt-get install -y \
+#     postgresql-client \
+#     && rm -rf /var/lib/apt/lists/*
+
+# # Definir diretório de trabalho
+# WORKDIR /sistema_bellafly
+
+# # Copiar e instalar dependências Python
+# COPY requirements.txt /sistema_bellafly/
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# # Copiar código da aplicação
+# COPY . /sistema_bellafly/
+
+# # Criar usuário não-root para segurança
+# RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /sistema_bellafly
+# USER appuser
+
+# # Expor porta
+# EXPOSE 8000
+
+# # Script de inicialização
+# CMD ["sh", "-c", "python wait_for_db.py && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"]
+
 FROM python:3.11-slim
 
 # Instalar dependências do sistema necessárias para PostgreSQL
 RUN apt-get update && apt-get install -y \
     postgresql-client \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 # Definir diretório de trabalho
@@ -35,5 +63,5 @@ USER appuser
 # Expor porta
 EXPOSE 8000
 
-# Script de inicialização
-CMD ["sh", "-c", "python wait_for_db.py && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"]
+# Comando sem wait_for_db - deixa o EasyPanel gerenciar a dependência
+CMD ["sh", "-c", "sleep 10 && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 myblog.wsgi:application"]
