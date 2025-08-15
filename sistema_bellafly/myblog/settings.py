@@ -75,20 +75,38 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+import dj_database_url
 
+def parse_database_config():
+    """
+    Parse da configuração do banco de dados a partir de DATABASE_URL ou variáveis individuais
+    """
+    database_url = os.environ.get('DATABASE_URL')
+    
+    if database_url:
+        # Se DATABASE_URL estiver definida, use ela
+        print(f"🔗 Usando DATABASE_URL para configuração do banco")
+        return dj_database_url.parse(database_url, conn_max_age=600)
+    else:
+        # Caso contrário, use as variáveis individuais
+        print(f"🔧 Usando variáveis individuais para configuração do banco")
+        return {
+            'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.environ.get('DATABASE_NAME', 'postgres'),
+            'USER': os.environ.get('DATABASE_USERNAME', 'postgres'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
+            'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+            'PORT': os.environ.get('DATABASE_PORT', '5432'),
+            'OPTIONS': {
+                'sslmode': os.environ.get('DATABASE_SSLMODE', 'prefer'),
+            },
+            'CONN_MAX_AGE': 600,
+        }
 
+# ✅ APENAS ESTA CONFIGURAÇÃO (remova a outra!)
 DATABASES = {
-    "default": {
-        "ENGINE": f"django.db.backends.{os.getenv('DATABASE_ENGINE')}",
-        "NAME": os.getenv("DATABASE_NAME"),
-        "USER": os.getenv("DATABASE_USERNAME"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST"),
-        "PORT": os.getenv("DATABASE_PORT"),
-    }
+    'default': parse_database_config()
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
