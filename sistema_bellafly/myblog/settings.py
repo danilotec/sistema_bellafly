@@ -160,9 +160,11 @@ JAZZMIN_SETTINGS = {
         'auth': 'fas fa-users-cog',
         'auth.user': 'fas fa-user',
         'auth.Group': 'fas fa-users',
-        'products.Brand': 'fas fa-copyright',
-        'products.Category': 'fas fa-object-group',
-        'products.Product': 'fas fa-box',
+        "products.Produto": "fas fa-box",
+        "products.Roupa": "fas fa-tshirt",
+        "products.ConjuntoRoupa": "fas fa-layer-group",
+        "products.KitBeleza": "fas fa-magic",
+        "products.Perfumaria": "fas fa-spray-can",
     },
 
     # Welcome text on the login screen

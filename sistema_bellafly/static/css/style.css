@@ -72,6 +72,11 @@
     transition: background-color 0.3s;
   }
 
+  .btn.active {
+    background-color: #d81b60;
+    color: #fff;
+  }
+
   footer {
     display: flex;
     justify-content: flex-end; /* empurra para a direita */

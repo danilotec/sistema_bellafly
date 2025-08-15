@@ -14,7 +14,13 @@
   <header>
     🦋 Bellafly 🦋 
   </header>
-  
+  <nav style="text-align:center; margin:20px 0;">
+    <a class="btn {% if categoria == 'todos' %}active{% endif %}" href="?categoria=todos">Todos</a>
+    <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas">Roupas</a>
+    <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos">Conjuntos de Roupas</a>
+    <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits">Kits de Beleza</a>
+    <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria">Perfumaria</a>
+  </nav>
   <section class="products">
     {% for produto in produtos %}
       {% if produto.ativo == True %}
@@ -23,10 +29,12 @@
           <h2>{{ produto.nome }}</h2>
           <p>{{ produto.descricao }}</p>
           <div class="price">R$ {{ produto.preco }}</div>
-          <div class="price">Disponivel: {{ produto.quantidade_estoque }}</div>
+          <div class="price">Disponível: {{ produto.quantidade_estoque }}</div>
           <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome }}" target="_blank">Comprar pelo WhatsApp</a>
         </div>
       {% endif %}
+    {% empty %}
+      <div style="text-align:center; width:100%;">Nenhum produto encontrado nesta categoria.</div>
     {% endfor %}
   </section>
   <footer>
