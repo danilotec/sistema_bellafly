@@ -20,8 +20,7 @@ Thumbs.db
 # Arquivos de banco de dados (opcional — útil em desenvolvimento local)
 *.sqlite3
 
-# Arquivos de mídia (gerados por upload de usuários)
-media/
+
 
 # Arquivos estáticos coletados (usados em produção)
 staticfiles/
