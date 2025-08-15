@@ -219,7 +219,7 @@ JAZZMIN_SETTINGS = {
     },
     'welcome_sign': 'Bem-vindo(a) ao SGF',
     'copyright': 'DS Sistemas LTDA',
-    'search_model': ['products.Product'],
+    # 'search_model': ['products.Product'],
     'show_ui_builder': True,
 }
 
