@@ -13,7 +13,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from urllib.parse import urlparse
+from dotenv import load_dotenv
+<<<<<<< Updated upstream
 
+load_dotenv()
+=======
+>>>>>>> Stashed changes
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -116,12 +123,12 @@ def parse_database_config():
     # Fallback para variáveis individuais
     print(f"🔧 Usando variáveis individuais para configuração do banco")
     return {
-        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DATABASE_NAME', 'postgres'),
-        'USER': os.environ.get('DATABASE_USERNAME', 'postgres'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
-        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
-        'PORT': os.environ.get('DATABASE_PORT', '5432'),
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('DATABASE_NAME', 'postgres'),
+        'USER': os.getenv('DATABASE_USERNAME', 'postgres-user'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres-password'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
         'OPTIONS': {
             'sslmode': os.environ.get('DATABASE_SSLMODE', 'prefer'),
         },
@@ -182,8 +189,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'danilo0123499@gmail.com')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'dsvx vorx pfhw iqgz')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
 # Security settings for production
 if not DEBUG:

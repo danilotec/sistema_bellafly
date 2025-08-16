@@ -15,11 +15,10 @@
     🦋 Bellafly 🦋 
   </header>
   <nav style="text-align:center; margin:20px 0;">
-    <a class="btn {% if categoria == 'todos' %}active{% endif %}" href="?categoria=todos">Todos</a>
+    <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria">Perfumaria</a>
     <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas">Roupas</a>
     <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos">Conjuntos de Roupas</a>
     <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits">Kits de Beleza</a>
-    <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria">Perfumaria</a>
   </nav>
   <section class="products">
     {% for produto in produtos %}
