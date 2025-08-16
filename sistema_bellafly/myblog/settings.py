@@ -28,15 +28,15 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 # CSRF_TRUSTED_ORIGINS = os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', default='').split(',')
-CSRF_TRUSTED_ORIGINS = [
-    'https://bellafly.omnisistems.com.br',
-    'http://bellafly.omnisistems.com.br',
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://bellafly.omnisistems.com.br',
+#     'http://bellafly.omnisistems.com.br',
+# ]
 
-# Para HTTPS
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SECURE = True
+# # Para HTTPS
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = 'Lax'
+# SESSION_COOKIE_SECURE = True
 # Application definition
 INSTALLED_APPS = [
     'jazzmin',
