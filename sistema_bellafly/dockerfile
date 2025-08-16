@@ -55,6 +55,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar código da aplicação
 COPY . /sistema_bellafly/
+RUN mkdir -p /app/media/produtos
 
 # Criar usuário não-root para segurança
 RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /sistema_bellafly
