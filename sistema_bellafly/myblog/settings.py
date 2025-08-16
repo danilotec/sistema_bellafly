@@ -62,7 +62,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = True
 
+# IMPORTANTE: Esta configuração permite que o Whitenoise sirva media files
 ROOT_URLCONF = 'myblog.urls'
 
 TEMPLATES = [
@@ -168,6 +171,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Media files (user uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+WHITENOISE_ROOT = MEDIA_ROOT
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
