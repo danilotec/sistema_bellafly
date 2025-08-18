@@ -19,16 +19,16 @@
 
   <nav id="menu" class="sidebar">
     <div class="sidebar-title">Categorias</div>
-    <a class="btn active" href="#" data-category="perfumaria">
+    <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria" data-category="perfumaria">
       <span>✨ Perfumaria</span>
     </a>
-    <a class="btn" href="#" data-category="roupas">
+    <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas" data-category="roupas">
       <span>👗 Roupas</span>
     </a>
-    <a class="btn" href="#" data-category="conjuntos">
+    <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos" data-category="conjuntos">
       <span>👚 Conjuntos de Roupas</span>
     </a>
-    <a class="btn" href="#" data-category="kits">
+    <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits" data-category="kits">
       <span>💄 Kits de Beleza</span>
     </a>
   </nav>
@@ -51,7 +51,7 @@
   </section>
 
   <footer>
-    <a class="btn" href="#" target="_blank">
+    <a class="btn" href="{% url 'admin:index' %}" target="_blank">
       <span>🔐 Login Admin</span>
     </a>
   </footer>
@@ -78,7 +78,7 @@
     // Handle category clicks
     document.querySelectorAll('.sidebar a').forEach(link => {
       link.addEventListener('click', function(e) {
-        e.preventDefault();
+        //e.preventDefault();
         
         // Remove active class from all links
         document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
