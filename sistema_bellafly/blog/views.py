@@ -2,7 +2,7 @@ from django.shortcuts import render
 from products.models import Produto, Roupa, ConjuntoRoupa, KitBeleza, Perfumaria
 
 def index(request):
-    categoria = request.GET.get('categoria', 'todos')
+    categoria = request.GET.get('categoria', 'perfumaria')
     if categoria == 'roupas':
         produtos = Roupa.objects.filter(ativo=True)
     elif categoria == 'conjuntos':
