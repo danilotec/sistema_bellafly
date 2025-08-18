@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +8,31 @@
   <link rel="shortcut icon" href="{% static 'icons/favicon.png' %}" type="image/x-icon">
   <title>Bellafly</title>
 </head>
-
 <body>
   <header>
-    🦋 Bellafly 🦋 
+    <h1>🦋 Bellafly 🦋</h1>
   </header>
-  <nav style="text-align:center; margin:20px 0;">
-    <a class="btn {% if categoria == 'todos' %}active{% endif %}" href="?categoria=todos">Todos</a>
-    <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas">Roupas</a>
-    <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos">Conjuntos de Roupas</a>
-    <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits">Kits de Beleza</a>
-    <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria">Perfumaria</a>
+
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <nav id="menu" class="sidebar">
+    <div class="sidebar-title">Categorias</div>
+    <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria" data-category="perfumaria">
+      <span>✨ Perfumaria</span>
+    </a>
+    <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas" data-category="roupas">
+      <span>👗 Roupas</span>
+    </a>
+    <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos" data-category="conjuntos">
+      <span>👚 Conjuntos de Roupas</span>
+    </a>
+    <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits" data-category="kits">
+      <span>💄 Kits de Beleza</span>
+    </a>
   </nav>
+  
   <section class="products">
     {% for produto in produtos %}
       {% if produto.ativo == True %}
@@ -30,15 +42,77 @@
           <p>{{ produto.descricao }}</p>
           <div class="price">R$ {{ produto.preco }}</div>
           <div class="price">Disponível: {{ produto.quantidade_estoque }}</div>
-          <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome }}" target="_blank">Comprar pelo WhatsApp</a>
+          <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome }}" target="_blank">💬 Comprar pelo WhatsApp</a>
         </div>
       {% endif %}
     {% empty %}
       <div style="text-align:center; width:100%;">Nenhum produto encontrado nesta categoria.</div>
     {% endfor %}
   </section>
+
   <footer>
-    <a class="btn" href="{% url 'admin:index' %}" target="_blank">Login</a>
+    <a class="btn" href="{% url 'admin:index' %}" target="_blank">
+      <span>🔐 Login Admin</span>
+    </a>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("overlay");
+      const isOpen = menu.classList.contains("show");
+      
+      if (isOpen) {
+        closeMenu();
+      } else {
+        menu.classList.add("show");
+        overlay.classList.add("show");
+      }
+    }
+
+    function closeMenu() {
+      document.getElementById("menu").classList.remove("show");
+      document.getElementById("overlay").classList.remove("show");
+    }
+
+    // Handle category clicks
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        //e.preventDefault();
+        
+        // Remove active class from all links
+        document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        // Close menu on mobile
+        if (window.innerWidth <= 768) {
+          closeMenu();
+        }
+        
+        // Here you would typically filter products or make an AJAX request
+        console.log('Category selected:', this.dataset.category);
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById("menu");
+      const toggle = document.querySelector(".menu-toggle");
+      
+      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Handle image loading
+    document.querySelectorAll('.card img').forEach(img => {
+      img.addEventListener('load', function() {
+        this.style.animation = 'none';
+        this.style.background = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
