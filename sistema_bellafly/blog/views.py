@@ -11,7 +11,7 @@ def index(request):
         produtos = KitBeleza.objects.filter(ativo=True)
     elif categoria == 'perfumaria':
         produtos = Perfumaria.objects.filter(ativo=True)
-    else:
+    elif categoria == 'produtos':
         produtos = Produto.objects.filter(ativo=True)
     context = {'produtos': produtos, 'categoria': categoria}
     return render(request, template_name='index.html', context=context)
