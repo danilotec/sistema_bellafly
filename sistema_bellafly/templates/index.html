@@ -46,77 +46,133 @@
           <div class="price">R$ {{ produto.preco }}</div>
           <div class="price">Disponível: {{ produto.quantidade_estoque }}</div>
           <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome|urlencode }}" target="_blank">💬 Comprar pelo WhatsApp</a>
+          <a class="btn add-to-cart" data-nome="{{ produto.nome }}" data-preco="{{ produto.preco|floatformat:2 }}">🛒 Adicionar ao Carrinho</a>
         </div>
       {% endif %}
     {% empty %}
     <div style="text-align:center; width:100%;">Nenhum produto encontrado nesta categoria.</div>
     {% endfor %}
   </section>
-  
+
+  <!-- Botão flutuante do carrinho -->
+  <div id="cart-icon" onclick="toggleCart()">
+    🛒 <span id="cart-count">0</span>
+  </div>
+
+  <!-- Sidebar do carrinho -->
+  <div id="cart-sidebar">
+    <h2>🛍️ Carrinho</h2>
+    <div id="cart-items"></div>
+    <div id="cart-total"></div>
+    <button class="btn" onclick="sendCartToWhatsApp()">💬 Enviar Pedido no WhatsApp</button>
+  </div>
+  <div id="cart-overlay" onclick="toggleCart()"></div>
+
   <footer>
-    <a class="btn" href="{% url 'admin:index' %}" target="_blank">
-      <span>🔐 Login Admin</span>
-    </a>
+    <a class="btn" href="{% url 'admin:index' %}" target="_blank">🔐 Login Admin</a>
     <p>contato@omnisistems.com.br</p>
   </footer>
 
   <script>
+    // Menu lateral
     function toggleMenu() {
       const menu = document.getElementById("menu");
       const overlay = document.getElementById("overlay");
-      const isOpen = menu.classList.contains("show");
-      
-      if (isOpen) {
-        closeMenu();
-      } else {
-        menu.classList.add("show");
-        overlay.classList.add("show");
-      }
+      menu.classList.toggle("show");
+      overlay.classList.toggle("show");
     }
-
     function closeMenu() {
       document.getElementById("menu").classList.remove("show");
       document.getElementById("overlay").classList.remove("show");
     }
 
-    // Handle category clicks
-    document.querySelectorAll('.sidebar a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        //e.preventDefault();
-        
-        // Remove active class from all links
-        document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
-        
-        // Add active class to clicked link
-        this.classList.add('active');
-        
-        // Close menu on mobile
-        if (window.innerWidth <= 768) {
-          closeMenu();
-        }
-        
-        // Here you would typically filter products or make an AJAX request
-        console.log('Category selected:', this.dataset.category);
-      });
-    });
+    // -------------------------
+    // CARRINHO
+    // -------------------------
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      const menu = document.getElementById("menu");
-      const toggle = document.querySelector(".menu-toggle");
-      
-      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-        closeMenu();
+    function renderCart() {
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      const cartCount = document.getElementById("cart-count");
+      cartItems.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Seu carrinho está vazio.</p>";
+        cartTotal.innerHTML = "";
+        cartCount.textContent = "0";
+        return;
       }
-    });
 
-    // Handle image loading
-    document.querySelectorAll('.card img').forEach(img => {
-      img.addEventListener('load', function() {
-        this.style.animation = 'none';
-        this.style.background = 'none';
+      let total = 0;
+      let count = 0;
+
+      cart.forEach((item, index) => {
+        total += item.preco * item.quantidade;
+        count += item.quantidade;
+        cartItems.innerHTML += `
+          <div>
+            ${item.nome} - R$ ${item.preco.toFixed(2)} x ${item.quantidade}
+            <button onclick="removeFromCart(${index})">❌</button>
+          </div>
+        `;
+      });
+
+      cartTotal.innerHTML = `<h3>Total: R$ ${total.toFixed(2)}</h3>`;
+      cartCount.textContent = count;
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    // Adicionar ao carrinho
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const nome = this.dataset.nome;
+        const preco = parseFloat(this.dataset.preco.replace(",", "."));
+        const existing = cart.find(item => item.nome === nome);
+
+        if (existing) {
+          existing.quantidade += 1;
+        } else {
+          cart.push({ nome, preco, quantidade: 1 });
+        }
+
+        renderCart();
       });
     });
+
+    function sendCartToWhatsApp() {
+      if (cart.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+      }
+
+      let mensagem = "🛍️ Meu Pedido Bellafly:%0A%0A";
+      let total = 0;
+
+      cart.forEach(item => {
+        mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)} x ${item.quantidade}%0A`;
+        total += item.preco * item.quantidade;
+      });
+
+      mensagem += `%0A💰 Total: R$ ${total.toFixed(2)}`;
+
+      const telefone = "557981718236";
+      const url = `https://wa.me/${telefone}?text=${mensagem}`;
+      window.open(url, "_blank");
+    }
+
+    function toggleCart() {
+      document.getElementById("cart-sidebar").classList.toggle("show");
+      document.getElementById("cart-overlay").classList.toggle("show");
+    }
+
+    // Inicializa carrinho
+    renderCart();
   </script>
 </body>
 </html>
