@@ -22,12 +22,12 @@
     <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria" data-category="perfumaria">
       <span>✨ Perfumaria</span>
     </a>
-    <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas" data-category="roupas">
+    {% comment %} <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas" data-category="roupas">
       <span>👗 Roupas</span>
     </a>
     <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos" data-category="conjuntos">
       <span>👚 Conjuntos de Roupas</span>
-    </a>
+    </a> {% endcomment %}
     <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits" data-category="kits">
       <span>💄 Kits de Beleza</span>
     </a>
