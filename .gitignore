@@ -20,7 +20,7 @@ Thumbs.db
 # Arquivos de banco de dados (opcional — útil em desenvolvimento local)
 *.sqlite3
 
-
+*.jpg
 
 # Arquivos estáticos coletados (usados em produção)
 staticfiles/
