@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import CheckboxSell
 from django.forms import ModelForm
 from django.core.mail import send_mail
+import threading
 
 class CheckboxSellForm(ModelForm):
     class Meta:
@@ -20,13 +21,13 @@ class CheckboxSellForm(ModelForm):
 class CheckboxTaskAdmin(admin.ModelAdmin):
     form = CheckboxSellForm
     
-    list_display = ('nome', 'created_at', 'checkboxes_concluidos', 'progresso')
+    list_display = ('nome', 'email', 'created_at', 'checkboxes_concluidos', 'progresso')
     list_filter = ('created_at', 'updated_at')
-    search_fields = ('nome',)
+    search_fields = ('nome','email')
     
     fieldsets = (
         ('Informações Gerais', {
-            'fields': ('nome',)
+            'fields': ('nome','email')
         }),
         ('Vendas 1-10', {
             'fields': (
@@ -84,23 +85,55 @@ class CheckboxTaskAdmin(admin.ModelAdmin):
                 checkbox_field = f'checkbox_{i}'
                 original_value = getattr(original, checkbox_field)
                 new_value = getattr(obj, checkbox_field)
-                
-                # if original_value != new_value:
-                #     if new_value:
-                #         send_mail(
-                #             'Tarefa Marcada',
-                #             f"🎯 ADMIN: Usuário {request.user.username} marcou a Tarefa {i}",
-                #             'danilo0123499@gmail.com',  # De
-                #             ['gamerotaku83@gmail.com'],  # Para
-                #             fail_silently=False,
-                #         )
+                if original_value != new_value:
+                    if new_value:
+                        if i == 10:
+                            send_async_mail(
+                                'Compra concluida',
+                                f"🎯 Parabens seu cartão fidelidade foi"
+                                " concluido!"
+                                "\n Aproveite sua recompensa,"
+                                " com carinho, Bellalfy!" 
+                                f"\n Status: {i}0%",
+                                None,
+                                [obj.email],
+                            )
+                        elif i >= 5:
+                            send_async_mail(
+                                'Compra concluida',
+                                f"🎯 Você esta muito perto de completar seu"
+                                " cartao Bellalfy falta pouco para garantir"
+                                " sua recompensa!" 
+                                f"\n Status: {i}0%",
+                                None,
+                                [obj.email],
+                            )
+                        elif i >= 1:
+                            send_async_mail(
+                                'Compra concluida',
+                                f"🎯 Obrigada por escolher a Bellafly,"
+                                " seu cartao de fidelidade recebeu mais um ponto"
+                                " rumo a sua recompensa!"
+                                f"\n Status: {i}0%",
+                                None,
+                                [obj.email],
+                            )
 
-                #     else:
-                #         send_mail(
-                #             'Tarefa Desmarcada',
-                #             f"⚠️  ADMIN: Usuário {request.user.username} desmarcou a Tarefa {i}",
-                #             'danilo0123499@gmail.com',  # De
-                #             ['gamerotaku83@gmail.com'],  # Para
-                #             fail_silently=False,
-                #         )
+
+                    # else:
+                        # send_async_mail(
+                        #     'Tarefa Desmarcada',
+                        #     f"⚠️  ADMIN: Usuário {request.user.username} desmarcou a Tarefa {i}",
+                        #     None,
+                        #     [obj.email],
+                        # )
         super().save_model(request, obj, form, change)
+
+
+def send_async_mail(subject, message, from_email, recipent_list):
+    threading.Thread(
+        target=send_mail,
+        args=(subject, message, from_email, recipent_list),
+        kwargs={'fail_silently': False},
+        daemon=True
+    ).start()

@@ -4,6 +4,7 @@ from django.utils import timezone
 
 class CheckboxSell(models.Model):
     nome = models.CharField(max_length=200, default="Cliente")
+    email = models.EmailField(unique=False, null=True, blank=True)
     
     checkbox_1 = models.BooleanField(default=False, verbose_name="Venda 1")
     data_checkbox_1 = models.DateTimeField(null=True, blank=True, verbose_name="Data Venda 1")
