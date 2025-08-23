@@ -89,20 +89,20 @@ class CheckboxTaskAdmin(admin.ModelAdmin):
                     if new_value:
                         if i == 10:
                             send_async_mail(
-                                'Compra concluida',
+                                'Compra concluida ✅',
                                 f"🎯 Parabens seu cartão fidelidade foi"
                                 " concluido!"
                                 "\n Aproveite sua recompensa,"
-                                " com carinho, Bellalfy!" 
-                                f"\n Status: {i}0%",
+                                " com carinho, Bellafly!" 
+                                f"\n Status: {i}0% 🎉🎊",
                                 None,
                                 [obj.email],
                             )
                         elif i >= 5:
                             send_async_mail(
-                                'Compra concluida',
+                                'Compra concluida ✅',
                                 f"🎯 Você esta muito perto de completar seu"
-                                " cartao Bellalfy falta pouco para garantir"
+                                " cartao Bellafly falta pouco para garantir"
                                 " sua recompensa!" 
                                 f"\n Status: {i}0%",
                                 None,
@@ -110,7 +110,7 @@ class CheckboxTaskAdmin(admin.ModelAdmin):
                             )
                         elif i >= 1:
                             send_async_mail(
-                                'Compra concluida',
+                                'Compra concluida ✅',
                                 f"🎯 Obrigada por escolher a Bellafly,"
                                 " seu cartao de fidelidade recebeu mais um ponto"
                                 " rumo a sua recompensa!"
