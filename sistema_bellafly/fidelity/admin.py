@@ -85,22 +85,22 @@ class CheckboxTaskAdmin(admin.ModelAdmin):
                 original_value = getattr(original, checkbox_field)
                 new_value = getattr(obj, checkbox_field)
                 
-                if original_value != new_value:
-                    if new_value:
-                        send_mail(
-                            'Tarefa Marcada',
-                            f"🎯 ADMIN: Usuário {request.user.username} marcou a Tarefa {i}",
-                            'danilo0123499@gmail.com',  # De
-                            ['gamerotaku83@gmail.com'],  # Para
-                            fail_silently=False,
-                        )
+                # if original_value != new_value:
+                #     if new_value:
+                #         send_mail(
+                #             'Tarefa Marcada',
+                #             f"🎯 ADMIN: Usuário {request.user.username} marcou a Tarefa {i}",
+                #             'danilo0123499@gmail.com',  # De
+                #             ['gamerotaku83@gmail.com'],  # Para
+                #             fail_silently=False,
+                #         )
 
-                    else:
-                        send_mail(
-                            'Tarefa Desmarcada',
-                            f"⚠️  ADMIN: Usuário {request.user.username} desmarcou a Tarefa {i}",
-                            'danilo0123499@gmail.com',  # De
-                            ['gamerotaku83@gmail.com'],  # Para
-                            fail_silently=False,
-                        )
+                #     else:
+                #         send_mail(
+                #             'Tarefa Desmarcada',
+                #             f"⚠️  ADMIN: Usuário {request.user.username} desmarcou a Tarefa {i}",
+                #             'danilo0123499@gmail.com',  # De
+                #             ['gamerotaku83@gmail.com'],  # Para
+                #             fail_silently=False,
+                #         )
         super().save_model(request, obj, form, change)
