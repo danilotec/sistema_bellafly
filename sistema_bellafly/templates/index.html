@@ -79,10 +79,10 @@
       <!-- Primeira página -->
       {% if produtos.has_previous %}
         <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page=1" class="page-btn first">
-          ⏮ Primeira
+          ↞ Primeira
         </a>
         <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ produtos.previous_page_number }}" class="page-btn prev">
-          ◀ Anterior
+          ← Anterior
         </a>
       {% endif %}
 
@@ -102,10 +102,10 @@
       <!-- Próxima página -->
       {% if produtos.has_next %}
         <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ produtos.next_page_number }}" class="page-btn next">
-          Próxima ▶
+          Próxima →
         </a>
         <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ produtos.paginator.num_pages }}" class="page-btn last">
-          Última ⏭
+          Última ↠
         </a>
       {% endif %}
 
