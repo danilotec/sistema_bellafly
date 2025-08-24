@@ -20,6 +20,11 @@
 <body>
   <header>
     <h1>🦋 Bellafly 🦋</h1>
+    <form method="get">
+      <!-- ↓ CORREÇÃO AQUI: usa default_if_none para evitar "None" -->
+      <input type="text" name="q" placeholder="Buscar em todos os produtos..." value="{{ query|default_if_none:'' }}">
+      <button type="submit">🔍 Pesquisar</button>
+    </form>
   </header>
 
   <button class="menu-toggle" onclick="toggleMenu()">☰</button>

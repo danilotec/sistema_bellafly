@@ -472,3 +472,165 @@
 #cart-overlay.show {
   display: block;
 }
+
+/* ===================================
+   BARRA DE PESQUISA - BELLAFLY
+   =================================== */
+
+header form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Campo de input */
+header form input[type="text"] {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #333;
+  min-width: 0; /* Para responsividade */
+}
+
+header form input[type="text"]::placeholder {
+  color: #888;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+header form input[type="text"]:focus {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 6px 25px rgba(102, 126, 234, 0.3),
+    inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+header form input[type="text"]:focus::placeholder {
+  color: #bbb;
+}
+
+/* Botão de pesquisa */
+header form button {
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+header form button:hover {
+  background: linear-gradient(135deg, #ff5252, #ff7979);
+  box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+  transform: translateY(-2px);
+}
+
+header form button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+}
+
+/* Efeito de foco no formulário completo */
+header form:focus-within {
+  transform: scale(1.02);
+}
+
+/* Animação de loading quando pesquisando */
+header form button:active::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 1rem;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  header form {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+  
+  header form input[type="text"] {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+  
+  header form button {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header form {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  header form input[type="text"],
+  header form button {
+    border-radius: 25px;
+    width: 100%;
+  }
+  
+  header form button {
+    justify-content: center;
+  }
+}
+
+/* Animação suave de aparição */
+header form {
+  animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
