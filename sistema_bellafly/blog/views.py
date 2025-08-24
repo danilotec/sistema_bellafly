@@ -35,7 +35,7 @@ def index(request):
         else:
             produtos_list = list(Perfumaria.objects.filter(ativo=True).order_by('nome'))
     
-    paginator = Paginator(produtos_list, 10)  # 10 produtos por página
+    paginator = Paginator(produtos_list, 9)  # 10 produtos por página
     
     try:
         produtos = paginator.page(page_number)
