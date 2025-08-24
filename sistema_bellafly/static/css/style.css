@@ -634,3 +634,278 @@ header form {
   }
 }
 
+
+/* ===================================
+   PAGINAÇÃO - BELLAFLY
+   =================================== */
+
+/* Info da paginação (topo) */
+.pagination-info {
+  text-align: center;
+  margin: 20px 0 10px 0;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  border-radius: 15px;
+  max-width: 400px;
+  margin: 20px auto 30px auto;
+  backdrop-filter: blur(5px);
+}
+
+.pagination-info p {
+  color: #555;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Container principal da paginação */
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 40px 0;
+  padding: 20px;
+}
+
+/* Barra de paginação */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Botões de página */
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: #495057;
+  text-decoration: none;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.page-btn:hover::before {
+  left: 100%;
+}
+
+.page-btn:hover {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.page-btn:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+/* Página atual */
+.page-btn.current {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  cursor: default;
+  box-shadow: 
+    0 6px 20px rgba(102, 126, 234, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.page-btn.current:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(102, 126, 234, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões de navegação especiais */
+.page-btn.first,
+.page-btn.last,
+.page-btn.prev,
+.page-btn.next {
+  border-radius: 22px;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+.page-btn.first:hover,
+.page-btn.last:hover,
+.page-btn.prev:hover,
+.page-btn.next:hover {
+  background: linear-gradient(135deg, #ff5252, #ff7979);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Pontos de reticências */
+.page-dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: #6c757d;
+  font-weight: bold;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+/* Resumo da paginação */
+.pagination-summary {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  background: rgba(108, 117, 125, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pagination-container {
+    margin: 20px 0;
+    padding: 10px;
+  }
+  
+  .pagination {
+    padding: 10px 15px;
+    gap: 6px;
+  }
+  
+  .page-btn {
+    min-width: 40px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+  
+  .page-btn.first,
+  .page-btn.last,
+  .page-btn.prev,
+  .page-btn.next {
+    padding: 0 12px;
+    font-size: 0.75rem;
+  }
+  
+  .pagination-info {
+    margin: 10px auto 20px auto;
+    padding: 8px;
+  }
+  
+  .pagination-info p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    gap: 4px;
+  }
+  
+  .page-btn {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+  }
+  
+  .page-btn.first,
+  .page-btn.last {
+    display: none; /* Oculta em telas muito pequenas */
+  }
+  
+  .page-btn.prev::before {
+    content: '◀';
+  }
+  
+  .page-btn.next::before {
+    content: '▶';
+  }
+  
+  .page-btn.prev,
+  .page-btn.next {
+    width: 36px;
+    padding: 0;
+    font-size: 0;
+  }
+  
+  .page-btn.prev::before,
+  .page-btn.next::before {
+    font-size: 14px;
+  }
+}
+
+/* Animação de entrada */
+.pagination-container {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efeito de loading ao clicar em página */
+.page-btn:active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

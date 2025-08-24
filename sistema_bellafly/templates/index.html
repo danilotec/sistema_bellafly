@@ -21,9 +21,11 @@
   <header>
     <h1>🦋 Bellafly 🦋</h1>
     <form method="get">
-      <!-- ↓ CORREÇÃO AQUI: usa default_if_none para evitar "None" -->
       <input type="text" name="q" placeholder="Buscar em todos os produtos..." value="{{ query|default_if_none:'' }}">
       <button type="submit">🔍 Pesquisar</button>
+      {% if categoria %}
+        <input type="hidden" name="categoria" value="{{ categoria }}">
+      {% endif %}
     </form>
   </header>
 
@@ -36,12 +38,6 @@
     <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria" data-category="perfumaria">
       <span>✨ Perfumaria</span>
     </a>
-    {% comment %} <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas" data-category="roupas">
-      <span>👗 Roupas</span>
-    </a>
-    <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos" data-category="conjuntos">
-      <span>👚 Conjuntos de Roupas</span>
-    </a> {% endcomment %}
     <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits" data-category="kits">
       <span>💄 Kits de Beleza</span>
     </a>
@@ -49,6 +45,13 @@
       <span>🛍️ diversos</span>
     </a>
   </nav>
+  
+  <!-- INFO DA PAGINAÇÃO -->
+  {% if produtos.object_list %}
+  <div class="pagination-info">
+    <p>Mostrando {{ produtos.start_index }}-{{ produtos.end_index }} de {{ produtos.paginator.count }} produtos</p>
+  </div>
+  {% endif %}
   
   <section class="products">
     {% for produto in produtos %}
@@ -67,6 +70,53 @@
     <div style="text-align:center; width:100%;">Nenhum produto encontrado nesta categoria.</div>
     {% endfor %}
   </section>
+
+  <!-- PAGINAÇÃO -->
+  {% if produtos.paginator.num_pages > 1 %}
+  <div class="pagination-container">
+    <div class="pagination">
+      
+      <!-- Primeira página -->
+      {% if produtos.has_previous %}
+        <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page=1" class="page-btn first">
+          ⏮ Primeira
+        </a>
+        <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ produtos.previous_page_number }}" class="page-btn prev">
+          ◀ Anterior
+        </a>
+      {% endif %}
+
+      <!-- Números das páginas -->
+      {% for page in page_range %}
+        {% if page == '...' %}
+          <span class="page-dots">...</span>
+        {% elif page == current_page %}
+          <span class="page-btn current">{{ page }}</span>
+        {% else %}
+          <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ page }}" class="page-btn">
+            {{ page }}
+          </a>
+        {% endif %}
+      {% endfor %}
+
+      <!-- Próxima página -->
+      {% if produtos.has_next %}
+        <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ produtos.next_page_number }}" class="page-btn next">
+          Próxima ▶
+        </a>
+        <a href="?{% if query %}q={{ query }}&{% endif %}{% if categoria %}categoria={{ categoria }}&{% endif %}page={{ produtos.paginator.num_pages }}" class="page-btn last">
+          Última ⏭
+        </a>
+      {% endif %}
+
+    </div>
+    
+    <!-- Info adicional -->
+    <div class="pagination-summary">
+      Página {{ produtos.number }} de {{ produtos.paginator.num_pages }}
+    </div>
+  </div>
+  {% endif %}
 
   <!-- Botão flutuante do carrinho -->
   <div id="cart-icon" onclick="toggleCart()">
@@ -186,14 +236,14 @@
       document.getElementById("cart-sidebar").classList.toggle("show");
       document.getElementById("cart-overlay").classList.toggle("show");
     }
+    
     function clearCart() {
       if (confirm("Tem certeza que deseja limpar o carrinho?")) {
-      cart = [];
-      localStorage.removeItem("cart"); // remove do navegador
-      renderCart(); // atualiza a interface
+        cart = [];
+        localStorage.removeItem("cart");
+        renderCart();
       }
     }
-
 
     // Inicializa carrinho
     renderCart();

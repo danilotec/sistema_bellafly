@@ -1,40 +1,69 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from products.models import Produto, Roupa, ConjuntoRoupa, KitBeleza, Perfumaria
 from itertools import chain
 
 def index(request):
     categoria = request.GET.get('categoria', 'perfumaria')
-    query = request.GET.get('q', '')  # ← MUDANÇA: valor padrão vazio ao invés de None
+    query = request.GET.get('q', '')
+    page_number = request.GET.get('page', 1)
     
-    if query:  # ← Agora funciona corretamente pois string vazia é falsy
-        # Busca em todos os modelos
+    if query:  
+       
         roupas = Roupa.objects.filter(ativo=True, nome__icontains=query)
         conjuntos = ConjuntoRoupa.objects.filter(ativo=True, nome__icontains=query)
         kits = KitBeleza.objects.filter(ativo=True, nome__icontains=query)
         perfumaria = Perfumaria.objects.filter(ativo=True, nome__icontains=query)
         diversos = Produto.objects.filter(ativo=True, nome__icontains=query)
         
-        # Junta tudo em uma lista
-        produtos = list(chain(roupas, conjuntos, kits, perfumaria, diversos))
+        produtos_list = sorted(
+            list(chain(roupas, conjuntos, kits, perfumaria, diversos)),
+            key=lambda x: x.nome.lower()
+        )
     else:
-        # Comportamento normal por categoria
+       
         if categoria == 'roupas':
-            produtos = Roupa.objects.filter(ativo=True)
+            produtos_list = list(Roupa.objects.filter(ativo=True).order_by('nome'))
         elif categoria == 'conjuntos':
-            produtos = ConjuntoRoupa.objects.filter(ativo=True)
+            produtos_list = list(ConjuntoRoupa.objects.filter(ativo=True).order_by('nome'))
         elif categoria == 'kits':
-            produtos = KitBeleza.objects.filter(ativo=True)
+            produtos_list = list(KitBeleza.objects.filter(ativo=True).order_by('nome'))
         elif categoria == 'perfumaria':
-            produtos = Perfumaria.objects.filter(ativo=True)
+            produtos_list = list(Perfumaria.objects.filter(ativo=True).order_by('nome'))
         elif categoria == 'diversos':
-            produtos = Produto.objects.filter(ativo=True)
+            produtos_list = list(Produto.objects.filter(ativo=True).order_by('nome'))
         else:
-            # Fallback para categoria padrão
-            produtos = Perfumaria.objects.filter(ativo=True)
+            produtos_list = list(Perfumaria.objects.filter(ativo=True).order_by('nome'))
+    
+    paginator = Paginator(produtos_list, 10)  # 10 produtos por página
+    
+    try:
+        produtos = paginator.page(page_number)
+    except PageNotAnInteger:
+        produtos = paginator.page(1)
+    except EmptyPage:
+        produtos = paginator.page(paginator.num_pages)
+    
+    page_range = []
+    current_page = produtos.number
+    total_pages = paginator.num_pages
+    
+    if total_pages <= 7:
+        page_range = list(range(1, total_pages + 1))
+    else:
+        if current_page <= 4:
+            page_range = list(range(1, 6)) + ['...', total_pages]
+        elif current_page >= total_pages - 3:
+            page_range = [1, '...'] + list(range(total_pages - 4, total_pages + 1))
+        else:
+            page_range = [1, '...'] + list(range(current_page - 2, current_page + 3)) + ['...', total_pages]
     
     context = {
         'produtos': produtos,
         'categoria': categoria,
-        'query': query if query else '',  # ← MUDANÇA: garante que nunca seja None
+        'query': query if query else '',
+        'page_range': page_range,
+        'current_page': current_page,
+        'total_pages': total_pages,
     }
     return render(request, 'index.html', context)
