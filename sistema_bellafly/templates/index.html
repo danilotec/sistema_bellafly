@@ -38,6 +38,12 @@
     <a class="btn {% if categoria == 'perfumaria' %}active{% endif %}" href="?categoria=perfumaria" data-category="perfumaria">
       <span>✨ Perfumaria</span>
     </a>
+    {% comment %} <a class="btn {% if categoria == 'roupas' %}active{% endif %}" href="?categoria=roupas" data-category="roupas">
+      <span>👗 Roupas</span>
+    </a>
+    <a class="btn {% if categoria == 'conjuntos' %}active{% endif %}" href="?categoria=conjuntos" data-category="conjuntos">
+      <span>👚 Conjuntos de Roupas</span>
+    </a> {% endcomment %}
     <a class="btn {% if categoria == 'kits' %}active{% endif %}" href="?categoria=kits" data-category="kits">
       <span>💄 Kits de Beleza</span>
     </a>
@@ -62,7 +68,7 @@
           <p>{{ produto.descricao }}</p>
           <div class="price">R$ {{ produto.preco }}</div>
           <div class="price">Disponível: {{ produto.quantidade_estoque }}</div>
-          <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome|urlencode }}" target="_blank">💬 Comprar pelo WhatsApp</a>
+          <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome|urlencode }} - {{ produto.preco|floatformat:2 }}" target="_blank">💬 Comprar pelo WhatsApp</a>
           <a class="btn add-to-cart" data-nome="{{ produto.nome }}" data-preco="{{ produto.preco|floatformat:2 }}">🛒 Adicionar ao Carrinho</a>
         </div>
       {% endif %}
