@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from products.models import Produto, Roupa, ConjuntoRoupa, KitBeleza, Perfumaria
+from products.models import Produto, Roupa, ConjuntoRoupa, KitBeleza, Perfumaria, Acessorio
 from itertools import chain
 
 def index(request):
@@ -24,8 +24,8 @@ def index(request):
        
         if categoria == 'roupas':
             produtos_list = list(Roupa.objects.filter(ativo=True).order_by('nome'))
-        elif categoria == 'conjuntos':
-            produtos_list = list(ConjuntoRoupa.objects.filter(ativo=True).order_by('nome'))
+        elif categoria == 'acessorios':
+            produtos_list = list(Acessorio.objects.filter(ativo=True).order_by('nome'))
         elif categoria == 'kits':
             produtos_list = list(KitBeleza.objects.filter(ativo=True).order_by('nome'))
         elif categoria == 'perfumaria':

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Produto, Roupa, ConjuntoRoupa, KitBeleza, Perfumaria
+from .models import Produto, Roupa, ConjuntoRoupa, KitBeleza, Perfumaria, Acessorio
 
 
 @admin.register(Produto)
@@ -56,3 +56,9 @@ class PerfumariaAdmin(admin.ModelAdmin):
     list_display = ('nome', 'fragrancia', 'volume_ml', 'preco', 'quantidade_estoque', 'ativo')
     list_filter = ('fragrancia', 'ativo')
     search_fields = ('nome', 'descricao', 'fragrancia')
+
+@admin.register(Acessorio)
+class AcessoriosAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'preco', 'quantidade_estoque', 'ativo', 'data_cadastro')
+    list_filter = ('ativo', 'data_cadastro')
+    search_fields = ('nome', 'descricao')

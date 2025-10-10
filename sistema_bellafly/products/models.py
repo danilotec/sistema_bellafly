@@ -32,5 +32,8 @@ class Perfumaria(ProdutoBase):
     fragrancia = models.CharField(max_length=100)
     volume_ml = models.PositiveIntegerField()
 
+class Acessorio(ProdutoBase):
+    pass
+
 class Produto(ProdutoBase):
     pass
