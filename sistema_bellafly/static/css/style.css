@@ -377,6 +377,8 @@ header form button:active {
   position: relative;
   overflow: hidden;
   animation: fade-in-up 0.6s ease-out both;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes fade-in-up {
