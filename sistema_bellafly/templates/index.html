@@ -65,7 +65,7 @@
         <div class="card">
           <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} image">
           <h2>{{ produto.nome }}</h2>
-          <p>{{ produto.descricao }}</p>
+          <p id="description">{{ produto.descricao }}</p>
           <div class="price">R$ {{ produto.preco }}</div>
           <div class="price">Disponível: {{ produto.quantidade_estoque }}</div>
           <a class="btn" href="https://wa.me/557981718236?text=Olá,+tenho+interesse+no+{{ produto.nome|urlencode }} - {{ produto.preco|floatformat:2 }}" target="_blank">💬 Comprar pelo WhatsApp</a>

@@ -381,6 +381,16 @@ header form button:active {
   flex-direction: column;
 }
 
+#description {
+  max-height: 3.6em; /* altura aproximada para 2 linhas, ajuste como quiser */
+  overflow-y: auto; /* ativa rolagem vertical quando o texto ultrapassar a altura */
+  overflow-x: hidden; /* evita rolagem horizontal */
+  line-height: 1.8; /* altura da linha */
+  text-align: justify; /* opcional: deixa o texto mais bonito */
+  padding-right: 4px; /* espaço para não encostar na barra */
+  scrollbar-width: thin; /* scrollbar mais discreta (Firefox) */
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
